@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.enjoy.trip.mapper.NoticeMapper">
+
+<!-- 
+	List<Notice> selectNotice();
+
+	void writeNotice(Notice param);
+
+	void deleteNotice(int noticeNo);
+
+	void updateNotice(Notice param);
+
+	Notice getNotice(int noticeNo);
+ -->
+ 
+ <select id="selectNotice" resultType="Notice">
+	SELECT n.*,
+    	DATE_FORMAT(n.regist_date, '%Y-%m-%d') AS regist_date_str,
+    	u.name AS writer_name,
+    	(SELECT COUNT(*) FROM notice_like WHERE notice_no = n.no) AS likeCnt
+	FROM notice n
+	LEFT JOIN user u ON n.user_no = u.no
+	WHERE n.remove_date IS NULL
+	ORDER BY n.no DESC
+	LIMIT #{pageNo},#{amount}
+ </select>
+ 
+ <select id="selectTotalCnt" resultType="int">
+ 	SELECT COUNT(*) FROM notice where remove_date IS NULL;
+ </select>
+
+<insert id="writeNotice" parameterType="Notice" useGeneratedKeys="true" keyProperty="no">
+	insert into notice(title, contents, user_no, file_no) 
+	values(#{title}, #{contents}, #{userNo}, #{fileData})
+</insert>
+
+
+<update id="deleteNotice" parameterType="int">
+	update notice
+	   set remove_date = now()
+	 where no = #{no}
+</update>
+
+<delete id="removeNotice" parameterType="int">
+	DELETE FROM notice WHERE no = #{no}
+</delete>
+
+<update id="updateNotice" parameterType="Notice">
+	update notice
+	   set update_date = now(),
+	   	   title = #{title},
+	   	   contents = #{contents},
+	   	   file_no = #{fileData}
+	 where no = #{no}
+</update>
+
+<select id="getNotice" parameterType="int" resultType="Notice">
+	SELECT n.file_no as fileData, n.*, DATE_FORMAT(n.regist_date, '%Y-%m-%d') AS regist_date_str, u.name as writer_name FROM notice n LEFT JOIN user u ON n.user_no = u.no
+	 WHERE n.no = #{no}
+</select>
+
+<update id="hitsRateUp" parameterType="int">
+	UPDATE notice
+	   SET hits = hits + 1
+	 WHERE no = #{noticeNo}
+</update>
+
+<insert id="writeLike" parameterType="NoticeLike">
+	insert into notice_like(user_no, notice_no)
+	values(#{userNo},#{noticeNo})
+</insert>
+
+<delete id="deleteLike" parameterType="NoticeLike">
+	delete from notice_like where user_no = #{userNo} and notice_no = #{noticeNo}
+</delete>
+
+<select id="noticeLikeCnt" parameterType="int" resultType="int">
+	select count(*)
+	from notice_like
+	where notice_no = #{noticeNo}
+</select>
+
+<select id="userLikeSelect" parameterType="NoticeLike" resultType="int">
+	select count(*)
+	from notice_like
+	where user_no = #{userNo} and notice_no = #{noticeNo};
+</select>
+
+
+	
+</mapper>

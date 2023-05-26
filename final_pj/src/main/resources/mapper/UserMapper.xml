@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enjoy.trip.mapper.UserMapper">
+	<select id="login" parameterType="User" resultType="User">
+		SELECT *, CONCAT(email0 + '@' + email1) AS email FROM user WHERE id = #{id} AND password = #{password} 
+	</select>
+	<!-- <select id="selectTotalCnt" resultType="int">
+		select COUNT(*) from notice
+	</select> -->
+	<insert id="signUp" parameterType="User">
+		INSERT INTO user (id, password, name, email0, email1, sido, gugun, birth_year, birth_month, birth_date)
+		VALUES (#{id}, #{password}, #{name}, #{email0}, #{email1}, #{sido}, #{gugun}, #{birthYear}, #{birthMonth}, #{birthDate})
+	</insert>
+	<select id="checkDuplicateId" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM user WHERE id = #{id}
+	</select>
+	<update id="updateRefreshToken" parameterType="User">
+		UPDATE user SET refresh_token = #{refreshToken} WHERE no = #{no} 
+	</update>
+	<select id="getUserInfo" parameterType="HashMap" resultType="User">
+		SELECT no, id, password, name, sido, gugun, birth_year, birth_month, birth_date, email0, email1, CONCAT(email0 + '@' + email1) AS email, is_admin FROM user WHERE no = #{no} AND id = #{id}
+	</select>
+	<select id="findId" parameterType="User" resultType="String">
+		SELECT id FROM user WHERE name = #{name} AND birth_year = #{birthYear} AND birth_month = #{birthMonth} AND birth_date = #{birthDate}
+	</select>
+	<select id="findPw" parameterType="User" resultType="HashMap">
+		SELECT no FROM user WHERE id = #{id} AND name = #{name} AND email0 = #{email0} AND email1 = #{email1} AND remove_date IS NULL
+	</select>
+	<update id="updateTempPassword" parameterType="HashMap">
+		UPDATE user SET password = #{tempPassword} WHERE no = #{no}
+	</update>
+	<update id="updateUser" parameterType="User">
+		UPDATE user SET name = #{name}, email0 = #{email0}, email1 = #{email1}, sido = #{sido}, gugun = #{gugun}, birth_year = #{birthYear}, birth_month = #{birthMonth}, birth_date = #{birthDate}
+		WHERE no = #{no}
+	</update>
+</mapper>

@@ -1,0 +1,17 @@
+.main_visual_con{max-height: 700px; overflow: hidden;}
+.main_visual_con .text_box{position: absolute; z-index: 3; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align:  center; max-width: 520px;}
+.main_visual_con .text_box .title{font-size: 25px; font-size: 25px; line-height: 31px; line-height: 3.1rem; font-weight: 600; color: #fff; margin-bottom: 14px;}
+.main_visual_con .text_box .desc{font-size: 15px; font-size: 1.5rem; line-height: 30px; line-height: 3.0rem; font-weight: 300; color: #fff;}
+.main_visual_con .dim{position: absolute; top: 0; left: 0; background-color: #000; opacity: 0.15; z-index: 2; height: 100%;}
+
+.main_pagination_con{position: absolute; bottom: 60px !important; z-index: 5;}
+.main_pagination_con > span{background-color : rgba(255,255,255,0.8); margin-left: 15px; margin-right: 15px; display: inline-block;}
+.main_pagination_con > span.swiper-pagination-bullet-active{background-color: #fff;}
+
+.main_visual_wrap .rolling_arrow{z-index: 5; position: absolute; left: 30px; top: 50%; transform: translateY(-50%); background-image: url('../../common/img/swiper_arrow_left_h.png'); background-position: left center; cursor: pointer; width: 40px; height: 40px; background-size: 33px 33px; transition: 0.2s ease; background-repeat: no-repeat;}
+.main_visual_wrap .rolling_arrow.next{left: auto; right: 30px; background-image: url('../../common/img/swiper_arrow_right_h.png'); background-position: right center;}
+
+.main_visual_wrap .rolling_arrow:hover{background-image: url('../../common/img/swiper_arrow_left_h.png');}
+.main_visual_wrap .rolling_arrow.next:hover{background-image: url('../../common/img/swiper_arrow_right_h.png');}
+
+.main_contents_1{background-color: rgb(225, 225, 225); padding-top: 40px; padding-bottom: 40px;}

@@ -1,0 +1,7 @@
+.login_wrap{min-height: calc(100vh - 230px); display: flex; align-items: center;}
+.login_title{font-size: 30px; font-size: 3.0rem; line-height: 36px; line-height: 3.6rem; font-weight: 600; letter-spacing: -0.02em; border-bottom: 2px solid rgba(0,0,0,0.4);}
+.login_addr_list_con > li{position: relative; font-size: 15px; font-size: 1.5rem; line-height: 21px; line-height: 2.1rem; font-weight: 200; padding-left: 18px; margin-bottom: 5px;}
+.login_addr_list_con > li::after{content : ''; position: absolute; top: 11px; left: 0; width: 8px; border-bottom: 1px solid #17181d;}
+.login_addr_list_con > li > a{display: inline-block; position: relative; padding-right: 14px; font-size: 0; line-height: 0;}
+.login_addr_list_con > li > a::after{content: ''; position: absolute; right: 0; top: 5px; width: 6px; height: 11px; background-image: url('../../common/img/6x11_blue_arrow.png'); background-size: 6px 11px; background-repeat: no-repeat; background-position: center center;}
+.login_addr_list_con > li > a > span{font-size: 15px; font-size: 1.5rem; line-height: 21px; line-height: 2.1rem; font-weight: 500; color: #0072e6;}

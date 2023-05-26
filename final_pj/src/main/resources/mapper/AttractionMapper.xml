@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enjoy.trip.mapper.AttractionMapper">
+	<!-- 리스트 조회 -->	
+	<select id="selectList" parameterType="Map" resultType="AttractionInfo">
+		SELECT i.content_id, des.homepage, des.overview,
+		des.telname, d.cat1, d.cat2, d.cat3, d.created_time, d.modified_time,
+		d.booktour, i.content_type_id, i.title, i.addr1, i.addr2, i.zipcode,
+		i.tel, i.first_image, i.first_image2, i.readcount, i.sido_code,
+		i.gugun_code, i.latitude, i.longitude, i.mlevel
+		FROM attraction_info i,
+		attraction_detail d, attraction_description des
+		WHERE i.content_id =
+		d.content_id and i.content_id = des.content_id
+		<if test="sido != null and sido != ''">
+			AND i.sido_code=#{sido} 
+		</if>
+		<if test="gugun != null and gugun != ''">
+			AND i.gugun_code=#{gugun} 
+		</if>
+		LIMIT #{page.begin}, #{page.listSize}
+	</select>
+	
+	<!-- 총 갯수 조회 -->	
+	<select id="selectTotalCnt" parameterType="Map" resultType="int">
+		SELECT COUNT(*) FROM attraction_info
+		WHERE 1=1
+		<if test="sido != null and sido != ''">
+			AND sido_code=#{sido} 
+		</if>
+		<if test="gugun != null and gugun != ''">
+			AND gugun_code=#{gugun} 
+		</if>
+	</select>
+	
+	<update id="updateHits" parameterType="int">
+		UPDATE attraction_info SET hits = hits + 1 WHERE content_Id = #{attractionId}
+	</update>
+
+	<!-- 상세 조회 -->	
+	<select id="selectView" parameterType="int" resultType="AttractionInfo">
+		SELECT i.content_id, des.homepage, des.overview,
+		des.telname, d.cat1, d.cat2, d.cat3, d.created_time, d.modified_time,
+		d.booktour, i.content_type_id, i.title, i.addr1, i.addr2, i.zipcode,
+		i.tel, i.first_image, i.first_image2, i.readcount, i.sido_code,
+		i.gugun_code, i.latitude, i.longitude, i.mlevel, i.hits, i.uses
+		FROM attraction_info i,
+		attraction_detail d, attraction_description des
+		WHERE i.content_id =
+		d.content_id and i.content_id = des.content_id
+		AND i.content_id=#{contentId}		
+	</select>
+	
+	<!-- 즐겨찾기 조회 -->
+	<select id="selectFavorite" parameterType="int" resultType="int">
+		SELECT attraction_id FROM favorite WHERE user_no = #{userNo}
+	</select>
+	
+	<delete id="deleteFavorite" parameterType="hashmap">
+		DELETE FROM favorite WHERE user_no = #{userNo} AND attraction_id = #{attractionId}
+	</delete>
+	
+	<insert id="insertFavorite" parameterType="hashmap">
+		INSERT INTO favorite (user_no, attraction_id)
+		VALUES (#{userNo}, #{attractionId})
+	</insert>
+	
+</mapper>

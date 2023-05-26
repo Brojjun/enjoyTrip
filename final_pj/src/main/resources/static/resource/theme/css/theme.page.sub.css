@@ -1,0 +1,31 @@
+main {background-color: #dce2f8;}
+.main_contents_1 {background-color: #dce2f8;}
+.card_style_0_inner > .img_box > img {width: 255px; height: 170px;}
+
+.card_style_0_con {margin-bottom: 70px;}
+.card_style_0_inner {border: 2px solid #7383bf;}
+.card_style_0_inner .img_box {position: relative; margin-bottom: 0; text-align: center;}
+.card_style_0_inner .img_box > img {opacity: 0.8;}
+.img_box_text {transition: 0.2s; display: inline-block; padding-top: 2px; padding-bottom: 2px; font-weight: 600; width: 60%; position: absolute; top: 40%; left: 20%; background-color: #ffffffcc; border-radius: 2px; border: 2px solid #7383bf;}
+.img_box_text > a{transition: 0.2s; overflow: hidden; font-size: 26px; font-size: 2.6rem; line-height: 32px; line-height: 3.2rem; color: #3850a5; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; text-overflow: ellipsis; height: 32px;}
+.card_style_0_inner:hover .img_box_text{background-color: #4b5b96;}
+.card_style_0_inner:hover .img_box_text > a {color: #ffffffd3;}
+.card_style_0_inner:hover .img_box > img {opacity: 1;}
+
+/* 테이블 스타일 정의 */
+.table_style_0_con{overflow-x:auto;}
+.table_style_0_con > div{padding-left: 30px; padding-right: 30px; min-width: 900px;}
+.table_style_0_con > div > table{width: 100%;}
+.table_style_0{border-collapse: collapse; text-align: center;}
+.table_style_0 tbody tr.notice{background-color: #f7fbfd;}
+.table_style_0 tr{border-bottom: 2px solid #17181d;}
+.table_style_0 thead tr th{padding: 12px 10px 15px; font-size: 15px; font-size: 1.5rem; line-height: 21px; line-height: 2.1rem; font-weight: 300; color: #17181d; text-align: center;}
+.table_style_0 tbody tr td{padding: 24px 10px; font-size: 17px; font-size: 1.7rem; line-height: 23px; line-height: 2.3rem; font-weight: 200; color: #17181d;}
+.table_style_0 tbody tr td.tl{text-align: left;}
+
+.pagination_style_0_con .pagination_style_0{font-size: 0; white-space: nowrap; text-align: center;}
+.pagination_style_0_con .pagination_style_0 > li{position: relative; vertical-align: middle; display: inline-block; text-align: center; background-repeat: no-repeat; background-position: center center; cursor: pointer; font-weight: 700; width: 28px; height: 28px; box-sizing: border-box;}
+.pagination_style_0_con .pagination_style_0 > li.paging_btn_page{width: auto; font-size: 14px; font-size: 1.4rem; line-height: 23px; line-height: 2.3rem; font-weight: 300; color : #fff; padding-top: 3px; padding-left: 4px; padding-right: 4px; z-index: 1; margin-left: 8px; margin-right: 8px;}
+.pagination_style_0_con .pagination_style_0 > li.paging_btn_single_page{z-index: 0; text-indent: -10000px; border-radius: 50%; background-color: #fff; margin-right: 3px; margin-left: 3px;}
+.pagination_style_0_con .pagination_style_0 > li.paging_btn_single_page.to_first{background-image: url('../../common/img/pagination_style_0_double_left_arrow.png'); background-size: 11px 10px;}
+.pagination_style_0_con .pagination_style_0 > li.paging_btn_single_page.to_last{background-image: url('../../common/img/pagination_style_0_double_right_arrow.png'); background-size: 11px 10px;}

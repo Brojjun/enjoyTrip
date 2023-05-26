@@ -1,0 +1,29 @@
+.footer_inner .img_box {
+  width: 150px;
+}
+.footer-text-click > div {
+  color: #8c9bd3;
+  font-weight: 800;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 30px;
+  margin-bottom: 10px;
+  width: fit-content;
+}
+.footer-text-click > div :hover {
+  border-bottom: 1px solid #5e6da0;
+  /* background-color: #626e9b; */
+  color: #414e7e;
+  transition: 0.2s;
+}
+.footer-text {
+  margin-top: 13px;
+  padding-left: 20px;
+  width: calc(100% - 150px);
+  font-size: 1.3rem;
+}
+.footer-text-read p {
+  width: fit-content;
+  border-bottom: 1px solid #344170;
+  color: #414e7e;
+}

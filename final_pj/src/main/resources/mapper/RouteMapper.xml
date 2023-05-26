@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enjoy.trip.mapper.RouteMapper">
+	<resultMap id="viewMap" type="MyRoute">
+		<result property="writerName" column="writer_name"/>
+		<result property="scrapCnt" column="scrap_cnt"/>
+		<collection column="no = no" property="orders" javaType="List"
+			ofType="RouteOrders" select="selectOrdersList"/>
+	</resultMap>
+
+	<!-- 리스트 조회 -->	
+	<select id="selectList" parameterType="HashMap" resultType="MyRoute">
+		SELECT mr.*, u.name AS writer_name FROM my_route mr LEFT JOIN user u ON mr.member_no = u.no 
+		WHERE 1 = 1
+		<if test="searchType != null and searchType == 1 and searchText != null and searchText != ''">
+			<![CDATA[ 
+			 AND u.name like concat('%',#{searchText},'%') 
+			 ]]>  
+		</if>
+		<if test="searchType != null and searchType == 2 and searchText != null and searchText != ''">
+			<![CDATA[ 
+			 AND mr.title like concat('%',#{searchText},'%') 
+			 ]]>
+		</if>
+		LIMIT #{page.begin}, #{page.listSize}
+	</select>
+	
+	<!-- 총 갯수 조회 -->	
+	<select id="selectTotalCnt" parameterType="Map" resultType="int">
+		SELECT COUNT(*) FROM my_route mr LEFT JOIN user u ON mr.member_no = u.no
+		WHERE 1=1
+		<if test="searchType != null and searchType == 1 and searchText != null and searchText != ''">
+			<![CDATA[ 
+			 AND 
+				mr.title like concat('%',#{searchText},'%') 
+			 ]]>  
+		</if>
+		<if test="searchType != null and searchType == 2 and searchText != null and searchText != ''">
+			<![CDATA[ 
+			 AND 
+				u.name like concat('%',#{searchText},'%') 
+			 ]]>  
+		</if>
+	</select>
+	
+	<update id="updateHits" parameterType="int">
+		UPDATE my_route SET hits = hits + 1 WHERE no = #{routeNo}
+	</update>
+	
+	<select id="selectView" parameterType="int" resultMap="viewMap">
+		SELECT mr.*, u.name AS writer_name FROM my_route mr LEFT JOIN user u ON mr.member_no = u.no
+		WHERE mr.no = #{no}
+	</select>
+	
+	<select id="selectOrdersList" parameterType="MyRoute" resultType="RouteOrders">
+		SELECT * FROM route_orders WHERE route_no = #{no} ORDER BY order_num
+	</select>
+	
+	<select id="checkRoute" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM my_route WHERE no = #{routeNo} AND member_no = #{userNo}
+	</select>
+	
+	<insert id="insertRoute" parameterType="MyRoute">
+		INSERT INTO my_route (member_no, title, contents) VALUES (#{memberNo}, #{title}, #{contents})
+	</insert>
+	
+	<update id="updateRoute" parameterType="MyRoute">
+		UPDATE my_route SET title = #{title}, contents = #{contents} WHERE no = #{no}
+	</update>
+	
+	<update id="updateScrapCnt" parameterType="int">
+		UPDATE my_route SET scrap_cnt = scrap_cnt + 1 WHERE no = #{routeNo}
+	</update>
+	
+	<delete id="deleteRoute" parameterType="int">
+		DELETE FROM my_route WHERE no = #{routeNo}
+	</delete>
+	
+	<insert id="insertOrders" parameterType="MyRoute">
+		INSERT INTO route_orders (route_no, attraction_id, order_num)
+		VALUES
+		<foreach collection="orders" item="item" separator=" , ">
+            (#{no}, #{item.attractionId}, #{item.orderNum})
+        </foreach>
+	</insert>
+	
+	<delete id="deleteOrders" parameterType="int">
+		DELETE FROM route_orders WHERE route_no = #{routeNo}
+	</delete>
+</mapper>

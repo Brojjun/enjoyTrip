@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.enjoy.trip.mapper.NoticeCommentMapper">
+
+<!-- 
+	List<NoticeComment> selectComment(int noticeNo) throws Exception;
+	
+	void writeComment(NoticeComment comment) throws Exception;
+	
+	void deleteComment(int CommentNo) throws Exception;
+	
+	void updateComment(NoticeComment comment) throws Exception;
+ -->
+ 
+ <select id="selectComment" resultType="NoticeComment" parameterType="int">
+ 	SELECT c.comment_no, c.user_no,  c.contents, u.name as writerName, c.recomment, c.regist_date
+ 	FROM notice_comment c JOIN user u
+ 	ON c.user_no = u.no
+ 	WHERE c.notice_no = #{noticeNo} and delete_date IS NULL
+ 	ORDER BY recomment
+ </select>
+ 
+ <insert id="writeComment" parameterType="NoticeComment">
+ 	insert into notice_comment(user_no, notice_no, contents, recomment)
+ 	values(#{userNo}, #{noticeNo}, #{contents}, #{recomment})
+ </insert>
+ 
+ 
+ <update id="deleteComment" parameterType="NoticeComment">
+ 	UPDATE notice_comment
+ 	SET delete_date = now()
+ 	WHERE comment_no = #{commentNo}
+ 	<if test="recomment != null and recomment == -1">
+		OR recomment = #{commentNo}  
+	</if>
+ </update>
+
+
+<update id="updateComment" parameterType="NoticeComment">
+	update notice_comment
+	set update_date = now(),
+		contents = #{contents}
+	where comment_no = #{commentNo}
+</update>
+
+
+
+</mapper>

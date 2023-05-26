@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.enjoy.trip.mapper.BoardMapper">
+
+
+<resultMap type="ShareBoard" id="boardResultMap">
+  <result property="no" column="no"/>
+  <result property="hits" column="hits"/>
+  <result property="title" column="title"/>
+  <result property="contents" column="contents"/>
+  <result property="registerTime" column="register_time"/>
+  <result property="writerName" column="name"/>
+</resultMap>
+
+
+<select id="selectBoard" resultMap="boardResultMap">
+  select s.*, u.name
+    from share_board s LEFT JOIN user u ON s.user_no = u.no
+</select>
+
+<select id="getBoard" parameterType="int" resultMap="boardResultMap">
+	select *
+	  from share_board
+	 where no = #{no}
+</select> 
+
+<update id="deleteBoard" parameterType="int">
+	update share_board
+	   set remove_date = now()
+	 where no = #{no}
+</update>
+
+<insert id="writeBoard" parameterType="ShareBoard">
+	insert into share_board(title, contents, user_no, register_time) 
+	values(#{title}, #{contents}, #{UserNo}, now())
+</insert>
+
+<update id="updateBoard" parameterType="ShareBoard">
+	update share_board
+	   set update_date = now(),
+	   title = #{title},
+	   contents = #{contents}
+	 where no = #{no}
+</update>
+
+<select id="getShareAttraction" parameterType="int" resultType="ShareAttraction">
+	SELECT *
+	  FROM share_attraction s
+	  LEFT JOIN (
+                 SELECT *
+  				   FROM share_board
+  				  WHERE user_no = #{userNo}
+				) b 
+	    ON s.share_no = b.user_no
+	 WHERE b.user_no IS NOT NULL;
+</select>
+
+<update id="hitsRateUp" parameterType="int">
+	update share_board
+	   set hits = hits + 1
+	 where no = #{boardNo}
+</update>
+
+
+</mapper>

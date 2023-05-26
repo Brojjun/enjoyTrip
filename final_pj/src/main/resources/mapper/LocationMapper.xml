@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enjoy.trip.mapper.LocationMapper">
+	<select id="getSidoList" resultType="Sido">
+		SELECT * FROM sido
+	</select>
+	<select id="getGugunList" parameterType="int" resultType="Gugun">
+		SELECT * FROM gugun WHERE sido_code = #{sidoCode}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

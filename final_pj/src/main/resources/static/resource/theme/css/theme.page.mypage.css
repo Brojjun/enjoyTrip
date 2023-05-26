@@ -1,0 +1,27 @@
+main {
+  background-color: #dce4ff;
+}
+
+.mypage-info {
+  width: 100%;
+}
+.mypage_box_liked > div,
+.mypage-info-box > div {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 60px;
+  font-weight: 700;
+  color: #4f61a1;
+}
+.mypage_category {
+  float: none;
+  margin: 0 auto;
+  border-bottom: 2px solid #7383bf;
+  width: fit-content;
+}
+input {
+  width: 10px;
+}
+.card_style_0_inner {
+  border: 2px solid #7383bf;
+}
